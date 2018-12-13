@@ -12,7 +12,7 @@ var game = {
 		tileHeight: 24,
 		canvasWidth: 300,
 		canvasHeight: 300,
-		framesPerSecond: 24
+		gravity: 10
 	},
 	init: function (onInit) {
 		this.canvas.width = this.options.canvasWidth
@@ -27,6 +27,7 @@ var game = {
 		x: 54,
 		y: 0,
 		direction: "left",
+		isInAir: false,
 		animationFrameNumber: 0
 	},
 	animations: {
@@ -72,7 +73,6 @@ var game = {
 			this.options.tileWidth,
 			this.options.tileHeight
 		)
-		this.player.animationFrameNumber++
 	},
 	generateMap: function () {
 		var height = 10
@@ -93,16 +93,48 @@ var game = {
 		}
 	},
 	keyPress: function (event) {
-		switch (event.key) {
-			case 'a':
-				this.player.x -= 5
+		switch (event.keyCode) {
+			case 97:
 				this.player.direction = "left"
-				this.requestRedraw()
+				for (var i = 0; i < 4; i++) {
+					setTimeout(function () {
+						// Player can't move faster is there's friction from the ground
+						if (this.player.isInAir) {
+							this.player.x -= 5
+						} else {
+							this.player.x -= 3
+						}
+						this.requestRedraw()
+					}.bind(this), 500 / i)
+				}
+				this.player.animationFrameNumber++
 				break
-			case 'd':
-				this.player.x += 5
+			case 100:
 				this.player.direction = "right"
-				this.requestRedraw()
+				for (var i = 0; i < 4; i++) {
+					setTimeout(function () {
+						if (this.player.isInAir) {
+							this.player.x += 5
+						} else {
+							this.player.x += 3
+						}
+						this.requestRedraw()
+					}.bind(this), 500 / i)
+				}
+				this.player.animationFrameNumber++
+				break
+			case 32:
+				this.player.isInAir = true
+				var startingY = this.player.y
+				for (var i = 0; i < 21; i++) {
+					setTimeout(function (time) {
+						this.player.y = -100 + Math.pow((-time + 10), 2)
+						this.requestRedraw()
+					}.bind(this, i), i * 35)
+				}
+				setTimeout(function () {
+					this.player.isInAir = false
+				}.bind(this), 21 * 35)
 				break
 		}
 	},
