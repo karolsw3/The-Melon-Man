@@ -23,6 +23,12 @@ var game = {
 	map: {
 		structures: []
 	},
+	player: {
+		x: 54,
+		y: 0,
+		direction: "left",
+		animationFrameNumber: 0
+	},
 	animations: {
 		// Describe coordinates of consecutive animation frames of objects in textures
 		player: {
@@ -35,7 +41,17 @@ var game = {
 		grassPlatform: [{tileColumn: 0, tileRow: 0, x: 0, y: 0}, {tileColumn: 1, tileRow: 0, x: 1, y: 0}, {tileColumn: 2, tileRow: 0, x: 2, y: 0}]
 	},
 	drawTile: function (tileColumn, tileRow, x, y) {
-		this.context.drawImage(this.textures, tileColumn * this.options.tileWidth, tileRow * this.options.tileHeight, this.options.tileWidth, this.options.tileHeight, x * this.options.tileWidth, y * this.options.tileHeight, this.options.tileWidth, this.options.tileHeight)
+		this.context.drawImage(
+			this.textures,
+			tileColumn * this.options.tileWidth,
+			tileRow * this.options.tileHeight,
+			this.options.tileWidth,
+			this.options.tileHeight,
+			x * this.options.tileWidth - this.player.x + Math.round(this.canvas.width / 2 + this.options.tileWidth / 2),
+			y * this.options.tileHeight - this.player.y + Math.round(this.canvas.width / 2 + this.options.tileHeight / 2),
+			this.options.tileWidth,
+			this.options.tileHeight
+		)
 	},
 	drawStructure: function (structureName, x, y) {
 		var structure = this.structures[structureName]
@@ -43,14 +59,51 @@ var game = {
 			this.drawTile(structure[i].tileColumn, structure[i].tileRow, structure[i].x + x, structure[i].y + y)
 		}
 	},
+	drawPlayer: function () {
+		actualPlayerTile = this.animations.player[this.player.direction][this.player.animationFrameNumber % 4]
+		this.context.drawImage(
+			this.textures,
+			actualPlayerTile.tileColumn * this.options.tileWidth,
+			actualPlayerTile.tileRow * this.options.tileHeight,
+			this.options.tileWidth,
+			this.options.tileHeight,
+			Math.round(this.canvas.width / 2 - this.options.tileWidth / 2),
+			this.canvas.height / 2 - this.options.tileHeight / 2,
+			this.options.tileWidth,
+			this.options.tileHeight
+		)
+		this.player.animationFrameNumber++
+	},
 	generateMap: function () {
-		var height = 50
+		var height = 10
+
+		// Generate a platform for the player
+		this.map.structures.push({
+			structureName: "grassPlatform",
+			x: 0,
+			y: 0
+		})
+		// Generate the rest of the platforms
 		for (var i = 0; i < height; i++) {
 			this.map.structures.push({
 				structureName: "grassPlatform",
-				x: Math.floor(Math.random() * 10 + 2),
-				y: i * 3
+				x: Math.floor(Math.random() * 8 + 1),
+				y: -i * 3
 			})
+		}
+	},
+	keyPress: function (event) {
+		switch (event.key) {
+			case 'a':
+				this.player.x -= 5
+				this.player.direction = "left"
+				this.requestRedraw()
+				break
+			case 'd':
+				this.player.x += 5
+				this.player.direction = "right"
+				this.requestRedraw()
+				break
 		}
 	},
 	redraw: function () {
@@ -64,6 +117,9 @@ var game = {
 		for (var i = 0; i < this.map.structures.length; i++) {
 			this.drawStructure(this.map.structures[i].structureName, this.map.structures[i].x, this.map.structures[i].y)
 		}
+
+		// Draw the player
+		this.drawPlayer()
 	},
 	requestRedraw: function () {
 		if (!this.drawPending) {
@@ -72,6 +128,10 @@ var game = {
 		}
 	}
 }
+
+// Keyboard
+
+document.addEventListener("keypress", game.keyPress.bind(game), false);
 
 game.init(function () {
 	game.generateMap()
