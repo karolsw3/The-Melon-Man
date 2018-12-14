@@ -5,8 +5,8 @@ body {
 }
 
 canvas {
-  height: 900px;
-  width: 900px;
+  width: 100%;
+  box-sizing: border-box;
   margin: 0 auto;
   image-rendering: -moz-crisp-edges;
   image-rendering: -webkit-crisp-edges;

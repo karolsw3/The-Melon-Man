@@ -7,13 +7,14 @@ var game = {
 	textures: new Image(),
 	drawPending: false,
 	options: {
-		texturesPath: "https://cdn.pbrd.co/images/HRx0tpd.png",
+		texturesPath: "textures.png",
 		tileWidth: 24,
 		tileHeight: 24,
 		canvasWidth: 300,
 		canvasHeight: 300,
 		gravity: 10
 	},
+	pressedKeys: {},
 	init: function (onInit) {
 		this.canvas.width = this.options.canvasWidth
 		this.canvas.height = this.options.canvasHeight
@@ -28,6 +29,7 @@ var game = {
 		y: 0,
 		direction: "left",
 		isInAir: false,
+		moveInterval: null,
 		animationFrameNumber: 0
 	},
 	animations: {
@@ -48,8 +50,8 @@ var game = {
 			tileRow * this.options.tileHeight,
 			this.options.tileWidth,
 			this.options.tileHeight,
-			x * this.options.tileWidth - this.player.x + Math.round(this.canvas.width / 2 + this.options.tileWidth / 2),
-			y * this.options.tileHeight - this.player.y + Math.round(this.canvas.width / 2 + this.options.tileHeight / 2),
+			x * this.options.tileWidth - Math.round(this.player.x) + Math.round(this.canvas.width / 2 + this.options.tileWidth / 2),
+			y * this.options.tileHeight - Math.round(this.player.y) + Math.round(this.canvas.width / 2 + this.options.tileHeight / 2),
 			this.options.tileWidth,
 			this.options.tileHeight
 		)
@@ -92,49 +94,70 @@ var game = {
 			})
 		}
 	},
-	keyPress: function (event) {
-		switch (event.keyCode) {
-			case 97:
+	keydown: function (event) {
+		if (!this.pressedKeys[event.keyCode]) { // Prevent key repeating
+			switch (event.keyCode) {
+			case 65:
 				this.player.direction = "left"
-				for (var i = 0; i < 4; i++) {
-					setTimeout(function () {
-						// Player can't move faster is there's friction from the ground
-						if (this.player.isInAir) {
-							this.player.x -= 5
-						} else {
-							this.player.x -= 3
-						}
-						this.requestRedraw()
-					}.bind(this), 500 / i)
-				}
-				this.player.animationFrameNumber++
+				// This is what happens when you try to implement the whole physics by yourself V
+				clearInterval(this.player.moveInterval)
+				this.player.moveInterval = setInterval(function () {
+					for (var i = 1; i < 120; i++) {
+						setTimeout(function () {
+							// Player can't move faster is there's friction from the ground
+							if (this.player.isInAir) {
+								this.player.x -= 0.2
+							} else {
+								this.player.x -= 0.1
+							}
+							this.requestRedraw()
+						}.bind(this), 4 * i)
+					}
+					this.player.animationFrameNumber++
+				}.bind(this), 120)
 				break
-			case 100:
+			case 68:
 				this.player.direction = "right"
-				for (var i = 0; i < 4; i++) {
-					setTimeout(function () {
-						if (this.player.isInAir) {
-							this.player.x += 5
-						} else {
-							this.player.x += 3
-						}
-						this.requestRedraw()
-					}.bind(this), 500 / i)
-				}
-				this.player.animationFrameNumber++
+				clearInterval(this.player.moveInterval)
+				this.player.moveInterval = setInterval(function () {
+					for (var i = 1; i < 120; i++) {
+						setTimeout(function () {
+							if (this.player.isInAir) {
+								this.player.x += 0.2
+							} else {
+								this.player.x += 0.1
+							}
+							this.requestRedraw()
+						}.bind(this), 4 * i)
+					}
+					this.player.animationFrameNumber++
+				}.bind(this), 120)
 				break
 			case 32:
-				this.player.isInAir = true
-				var startingY = this.player.y
-				for (var i = 0; i < 21; i++) {
-					setTimeout(function (time) {
-						this.player.y = -100 + Math.pow((-time + 10), 2)
-						this.requestRedraw()
-					}.bind(this, i), i * 35)
+				if (!this.player.isInAir) {
+					this.player.isInAir = true
+					var startingY = this.player.y
+					for (var i = 0; i < 21; i++) {
+						setTimeout(function (time) {
+							this.player.y = -100 + Math.pow((-time + 10), 2)
+							this.requestRedraw()
+						}.bind(this, i), i * 35)
+					}
+					setTimeout(function () {
+						this.player.isInAir = false
+					}.bind(this), 21 * 35)
 				}
-				setTimeout(function () {
-					this.player.isInAir = false
-				}.bind(this), 21 * 35)
+				break
+		}
+			this.pressedKeys[event.keyCode] = true
+		}
+	},
+	keyup: function (event) {
+		this.pressedKeys[event.keyCode] = false
+		switch (event.keyCode) {
+			case 65:
+			case 68:
+				clearInterval(this.player.moveInterval)
 				break
 		}
 	},
@@ -163,7 +186,8 @@ var game = {
 
 // Keyboard
 
-document.addEventListener("keypress", game.keyPress.bind(game), false);
+document.addEventListener("keydown", game.keydown.bind(game), false)
+document.addEventListener("keyup", game.keyup.bind(game), false)
 
 game.init(function () {
 	game.generateMap()
