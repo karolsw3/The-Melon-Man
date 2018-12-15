@@ -32,20 +32,6 @@ var game = {
 		animationFrameNumber: 0,
 		collidesWithGround: true
 	},
-	checkCollisions: function () {
-		// Check player's collison with the ground
-		for (var i = 0; i < this.map.structures.length; i++) {
-			for (var j = 0; j < this.structures[this.map.structures[i].name].length; j++) {
-				if (
-					this.map.structures[i].x + this.structures[this.map.structures[i].name][j].x == Math.round(this.player.x / this.options.tileWidth) - 1
-					&& this.map.structures[i].y + this.structures[this.map.structures[i].name][j].y == ((this.player.y) / this.options.tileHeight)
-				) {
-					console.log("COLLISION")
-					this.player.isInAir = false
-				}
-			}
-		}
-	},
 	animations: {
 		// Describe coordinates of consecutive animation frames of objects in textures
 		player: {
