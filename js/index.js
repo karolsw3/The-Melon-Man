@@ -1,6 +1,4 @@
-
-
-
+// The spaghetti code masterpiece
 var game = {
 	canvas: document.getElementById('canvas'),
 	context: this.canvas.getContext('2d'),
@@ -27,10 +25,26 @@ var game = {
 	player: {
 		x: 54,
 		y: 0,
+		height: 24,
 		direction: "left",
 		isInAir: false,
 		moveInterval: null,
-		animationFrameNumber: 0
+		animationFrameNumber: 0,
+		collidesWithGround: true
+	},
+	checkCollisions: function () {
+		// Check player's collison with the ground
+		for (var i = 0; i < this.map.structures.length; i++) {
+			for (var j = 0; j < this.structures[this.map.structures[i].name].length; j++) {
+				if (
+					this.map.structures[i].x + this.structures[this.map.structures[i].name][j].x == Math.round(this.player.x / this.options.tileWidth) - 1
+					&& this.map.structures[i].y + this.structures[this.map.structures[i].name][j].y == ((this.player.y) / this.options.tileHeight)
+				) {
+					console.log("COLLISION")
+					this.player.isInAir = false
+				}
+			}
+		}
 	},
 	animations: {
 		// Describe coordinates of consecutive animation frames of objects in textures
@@ -56,8 +70,8 @@ var game = {
 			this.options.tileHeight
 		)
 	},
-	drawStructure: function (structureName, x, y) {
-		var structure = this.structures[structureName]
+	drawStructure: function (name, x, y) {
+		var structure = this.structures[name]
 		for (var i = 0; i < structure.length; i++) {
 			this.drawTile(structure[i].tileColumn, structure[i].tileRow, structure[i].x + x, structure[i].y + y)
 		}
@@ -77,18 +91,18 @@ var game = {
 		)
 	},
 	generateMap: function () {
-		var height = 10
+		var height = 100
 
 		// Generate a platform for the player
 		this.map.structures.push({
-			structureName: "grassPlatform",
+			name: "grassPlatform",
 			x: 0,
 			y: 0
 		})
 		// Generate the rest of the platforms
 		for (var i = 0; i < height; i++) {
 			this.map.structures.push({
-				structureName: "grassPlatform",
+				name: "grassPlatform",
 				x: Math.floor(Math.random() * 8 + 1),
 				y: -i * 3
 			})
@@ -137,15 +151,17 @@ var game = {
 				if (!this.player.isInAir) {
 					this.player.isInAir = true
 					var startingY = this.player.y
-					for (var i = 0; i < 21; i++) {
+					for (var i = 0; i < 61; i++) {
 						setTimeout(function (time) {
-							this.player.y = -100 + Math.pow((-time + 10), 2)
-							this.requestRedraw()
-						}.bind(this, i), i * 35)
+							if (this.player.isInAir) {
+								this.player.y = startingY + -121 + Math.pow((-time / 3 + 11), 2)
+								if (time > 29) {
+									this.checkCollisions()
+								}
+								this.requestRedraw()
+							}
+						}.bind(this, i), i * 12)
 					}
-					setTimeout(function () {
-						this.player.isInAir = false
-					}.bind(this), 21 * 35)
 				}
 				break
 		}
@@ -170,7 +186,7 @@ var game = {
 
 		// Draw the map
 		for (var i = 0; i < this.map.structures.length; i++) {
-			this.drawStructure(this.map.structures[i].structureName, this.map.structures[i].x, this.map.structures[i].y)
+			this.drawStructure(this.map.structures[i].name, this.map.structures[i].x, this.map.structures[i].y)
 		}
 
 		// Draw the player
