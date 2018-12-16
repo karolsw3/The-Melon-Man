@@ -3,6 +3,7 @@ game.player = {
 		x: 54,
 		y: 0,
 		height: 24,
+		highestY: 0,
 		direction: "left",
 		isInAir: false,
 		moveInterval: null,
@@ -27,9 +28,15 @@ game.player = {
 				}
 				this.fallInterval = setInterval(function() {
 					if (this.isInAir) {
-						this.y = startingY + -maxHeight + Math.pow((-time / 3 + 11), 2)
-						if (time > 29) {
+						this.y = startingY - maxHeight + Math.pow((-time / 3 + 11), 2)
+						if (this.y < this.highestY) {
+							this.highestY = this.y
+						}
+						if (time > 30) {
 							game.checkCollisions()
+						}
+						if (time > 150) {
+							game.isOver = true
 						}
 						game.requestRedraw()
 					}

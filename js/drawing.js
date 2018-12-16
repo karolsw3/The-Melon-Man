@@ -50,11 +50,27 @@ game.redraw = function () {
 
 	// Draw the player
 	game.drawPlayer()
+
+	// Draw "GUI"
+	game.context.font = "12px superscript"
+	game.context.textAlign = "center"
+	game.context.fillStyle = "black"
+	game.context.fillText("Points: " + Math.round(-game.player.highestY / 4), game.canvas.width - 50, game.canvas.height - 12)
 }
 
 game.requestRedraw = function () {
-	if (!game.drawPending) {
+	if (!game.drawPending && !game.isOver) {
 		game.drawPending = true
 		requestAnimationFrame(game.redraw)
+	}
+
+	if(game.isOver) {
+		clearInterval(this.player.fallInterval)
+		game.context.font = "30px superscript"
+		game.context.textAlign = "center"
+		game.context.fillStyle = "black"
+		game.context.fillText("Game over!", game.canvas.width / 2, game.canvas.height / 2)
+		game.context.font = "15px Georgia"
+		game.context.fillText("(Press F5 to restart)", game.canvas.width / 2, game.canvas.height / 2 + 50)
 	}
 }

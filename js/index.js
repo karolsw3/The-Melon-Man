@@ -1,7 +1,7 @@
 // The spaghetti code masterpiece
 var game = {
 	canvas: document.getElementById('canvas'),
-	context: this.canvas.getContext('2d'),
+	context: this.canvas.getContext('2d', {alpha: false}),
 	textures: new Image(),
 	drawPending: false,
 	options: {
@@ -16,6 +16,7 @@ var game = {
 	init: function (onInit) {
 		this.canvas.width = this.options.canvasWidth
 		this.canvas.height = this.options.canvasHeight
+		this.context.imageSmoothingEnabled = false
 		this.textures.src = this.options.texturesPath
 		this.textures.onload = onInit
 	},
@@ -39,9 +40,10 @@ var game = {
 		for (var i = 0; i < height; i++) {
 			this.map.structures.push({
 				name: "grassPlatform",
-				x: Math.floor(Math.random() * 11),
+				x: Math.floor(Math.random() * 10),
 				y: -i * 3
 			})
 		}
-	}
+	},
+	isOver: false
 }

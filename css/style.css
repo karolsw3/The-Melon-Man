@@ -1,13 +1,29 @@
+
+@font-face {
+    font-family: 'superscript';
+    src:url('../font/superscript.ttf.woff') format('woff'),
+        url('../font/superscript.ttf.svg#superscript') format('svg'),
+        url('../font/superscript.ttf.eot'),
+        url('../font/superscript.ttf.eot?#iefix') format('embedded-opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 html,
 body {
   margin: 0;
   padding: 0;
+  height: 100vh;
+  background: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 canvas {
-  width: 100%;
+  width: 700px;
+  height: 700px;
   box-sizing: border-box;
-  margin: 0 auto;
   image-rendering: -moz-crisp-edges;
   image-rendering: -webkit-crisp-edges;
   image-rendering: pixelated;
