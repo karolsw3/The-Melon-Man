@@ -40,7 +40,13 @@ game.redraw = function () {
 	game.drawPending = false
 
 	// Draw the background
-	game.context.fillStyle = "#a5d9ff"
+	if (game.backgroundLoaded) {
+		var pattern = game.context.createPattern(game.background, 'repeat') // Create a pattern with this image, and set it to "repeat".
+		game.context.fillStyle = pattern
+	} else {
+		game.context.fillStyle = "#a5d9ff"
+	}
+
 	game.context.fillRect(0, 0, game.canvas.width, game.canvas.height)
 
 	// Draw the map
@@ -55,7 +61,7 @@ game.redraw = function () {
 	game.context.font = "12px superscript"
 	game.context.textAlign = "center"
 	game.context.fillStyle = "black"
-	game.context.fillText("Points: " + Math.round(-game.player.highestY / 4), game.canvas.width - 50, game.canvas.height - 12)
+	game.context.fillText("Points: " + Math.round(-game.player.highestY / (3 * game.options.tileHeight)), game.canvas.width - 50, game.canvas.height - 12)
 }
 
 game.requestRedraw = function () {
