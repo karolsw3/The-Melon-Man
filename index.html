@@ -7,5 +7,16 @@
   <body>
     <canvas id="canvas"></canvas>
     <script  src="js/index.js"></script>
+    <script  src="js/collisionDetection.js"></script>
+    <script>
+      // Event listeners
+      document.addEventListener("keydown", game.keydown.bind(game), false)
+      document.addEventListener("keyup", game.keyup.bind(game), false)
+
+      game.init(function () {
+      	game.generateMap()
+      	game.requestRedraw()
+      })
+    </script>
   </body>
 </html>

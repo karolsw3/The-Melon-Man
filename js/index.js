@@ -29,6 +29,7 @@ var game = {
 		direction: "left",
 		isInAir: false,
 		moveInterval: null,
+		fallInterval: null, // The intervalest of intervals
 		animationFrameNumber: 0,
 		collidesWithGround: true
 	},
@@ -89,9 +90,32 @@ var game = {
 		for (var i = 0; i < height; i++) {
 			this.map.structures.push({
 				name: "grassPlatform",
-				x: Math.floor(Math.random() * 8 + 1),
+				x: Math.floor(Math.random() * 11),
 				y: -i * 3
 			})
+		}
+	},
+	jump (type) {
+		if (!this.player.isInAir) {
+			clearInterval(this.player.fallInterval)
+			this.player.isInAir = true
+			var startingY = this.player.y
+			var time = 1
+			maxHeight = 121
+			if (type == "fall") {
+				time = 30
+				maxHeight = 0
+			}
+			this.player.fallInterval = setInterval(function(){
+				if (this.player.isInAir) {
+					this.player.y = startingY + -maxHeight + Math.pow((-time / 3 + 11), 2)
+					if (time > 29) {
+						this.checkCollisions()
+					}
+					this.requestRedraw()
+				}
+				time++
+			}.bind(this), 9)
 		}
 	},
 	keydown: function (event) {
@@ -112,6 +136,10 @@ var game = {
 							}
 							this.requestRedraw()
 						}.bind(this), 4 * i)
+						if (i % 12 == 0 && !this.checkCollisions()) {
+							// Player should fall
+							this.jump("fall")
+						}
 					}
 					this.player.animationFrameNumber++
 				}.bind(this), 120)
@@ -129,26 +157,16 @@ var game = {
 							}
 							this.requestRedraw()
 						}.bind(this), 4 * i)
+						if (i % 12 == 0 && !this.checkCollisions()) {
+							// Player should fall
+							this.jump("fall")
+						}
 					}
 					this.player.animationFrameNumber++
 				}.bind(this), 120)
 				break
 			case 32:
-				if (!this.player.isInAir) {
-					this.player.isInAir = true
-					var startingY = this.player.y
-					for (var i = 0; i < 61; i++) {
-						setTimeout(function (time) {
-							if (this.player.isInAir) {
-								this.player.y = startingY + -121 + Math.pow((-time / 3 + 11), 2)
-								if (time > 29) {
-									this.checkCollisions()
-								}
-								this.requestRedraw()
-							}
-						}.bind(this, i), i * 12)
-					}
-				}
+				this.jump()
 				break
 		}
 			this.pressedKeys[event.keyCode] = true
@@ -185,13 +203,3 @@ var game = {
 		}
 	}
 }
-
-// Keyboard
-
-document.addEventListener("keydown", game.keydown.bind(game), false)
-document.addEventListener("keyup", game.keyup.bind(game), false)
-
-game.init(function () {
-	game.generateMap()
-	game.requestRedraw()
-})
