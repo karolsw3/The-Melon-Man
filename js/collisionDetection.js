@@ -21,7 +21,7 @@ game.checkCollisions = function () {
 				&& watchTheseGuys[i].y + game.structures[this.map.structures[i].name][j].y == ((game.player.y) / game.options.tileHeight)
 			) {
 				clearInterval(game.player.fallInterval)
-				this.player.isInAir = false
+				game.player.isInAir = false
 				return true
 			}
 		}
