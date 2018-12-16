@@ -35,7 +35,9 @@ var game = {
 	// Describe structures using coordinates of textures and coordinates on map
 	structures: {
 		"grassPlatform": [{tileColumn: 0, tileRow: 0, x: 0, y: 0}, {tileColumn: 1, tileRow: 0, x: 1, y: 0}, {tileColumn: 2, tileRow: 0, x: 2, y: 0}],
-		"grassPlatform--tiny":  [{tileColumn: 0, tileRow: 0, x: 0, y: 0}, {tileColumn: 2, tileRow: 0, x: 1, y: 0}]
+		"grassPlatform--tiny":  [{tileColumn: 0, tileRow: 0, x: 0, y: 0}, {tileColumn: 2, tileRow: 0, x: 1, y: 0}],
+		"snowPlatform": [{tileColumn: 0, tileRow: 1, x: 0, y: 0}, {tileColumn: 1, tileRow: 1, x: 1, y: 0}, {tileColumn: 2, tileRow: 1, x: 2, y: 0}],
+		"gelPlatform": [{tileColumn: 3, tileRow: 1, x: 0, y: 0}, {tileColumn: 4, tileRow: 1, x: 1, y: 0}, {tileColumn: 5, tileRow: 1, x: 2, y: 0}]
 	},
 	generateMap: function () {
 
@@ -46,17 +48,25 @@ var game = {
 			y: 0
 		})
 		// Generate the rest of the platforms
-		for (var i = 1; i < 30; i++) {
+		for (var i = 1; i < 20; i++) {
 			this.map.structures.push({
 				name: "grassPlatform",
-				x: Math.floor(Math.random() * 10),
+				x: Math.floor(Math.random() * 8),
 				y: -i * 3
 			})
 		}
 
-		for (var i = 30; i < 60; i++) {
+		for (var i = 20; i < 40; i++) {
 			this.map.structures.push({
-				name: "grassPlatform--tiny",
+				name: "snowPlatform",
+				x: Math.floor(Math.random() * 8),
+				y: -i * 3
+			})
+		}
+
+		for (var i = 40; i < 60; i++) {
+			this.map.structures.push({
+				name: "gelPlatform",
 				x: Math.floor(Math.random() * 6),
 				y: -i * 3
 			})
