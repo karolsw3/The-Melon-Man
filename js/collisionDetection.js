@@ -17,11 +17,14 @@ game.checkCollisions = function () {
 	for (var i = 0; i < watchTheseGuys.length; i++) {
 		for (var j = 0; j < game.structures[watchTheseGuys[i].name].length; j++) {
 			if (
-				watchTheseGuys[i].x + game.structures[this.map.structures[i].name][j].x == Math.round(game.player.x / game.options.tileWidth) - 1
-				&& watchTheseGuys[i].y + game.structures[this.map.structures[i].name][j].y == ((game.player.y) / game.options.tileHeight)
+				game.player.x / game.options.tileWidth - 0.5 >= watchTheseGuys[i].x + game.structures[this.map.structures[i].name][j].x
+				&& game.player.x / game.options.tileWidth - 0.5 <= watchTheseGuys[i].x + game.structures[this.map.structures[i].name][j].x + 1
+				&& game.player.y / game.options.tileHeight < watchTheseGuys[i].y + game.structures[this.map.structures[i].name][j].y + 0.2
+				&& game.player.y / game.options.tileHeight > watchTheseGuys[i].y + game.structures[this.map.structures[i].name][j].y - 0.2
 			) {
 				clearInterval(game.player.fallInterval)
 				game.player.isInAir = false
+				game.player.y = Math.round(game.player.y / game.options.tileHeight) * game.options.tileHeight
 				return true
 			}
 		}
