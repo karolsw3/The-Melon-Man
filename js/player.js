@@ -1,4 +1,3 @@
-
 game.player = {
 		x: 54,
 		y: 0,
@@ -7,7 +6,26 @@ game.player = {
 		direction: "left",
 		isInAir: false,
 		moveInterval: null,
-		fallInterval: null, // The intervalest of intervals
+		fallTimeout: function(startingY, time, maxHeight) {
+			setTimeout( function () {
+				if (this.isInAir) {
+					this.y = startingY - maxHeight + Math.pow((-time / 3 + 11), 2)
+					if (this.y < this.highestY) {
+						this.highestY = this.y
+					}
+					if (time > 30) {
+						game.checkCollisions()
+					}
+					if (time < 150) {
+						time++
+						this.fallTimeout(startingY, time, maxHeight)
+					} else {
+						game.isOver = true
+					}
+					game.requestRedraw()
+				}
+			}.bind(this, startingY, time, maxHeight), 15)
+		},
 		animationFrameNumber: 0,
 		collidesWithGround: true,
 		animations: {
@@ -26,22 +44,7 @@ game.player = {
 					time = 30
 					maxHeight = 0
 				}
-				this.fallInterval = setInterval(function() {
-					if (this.isInAir) {
-						this.y = startingY - maxHeight + Math.pow((-time / 3 + 11), 2)
-						if (this.y < this.highestY) {
-							this.highestY = this.y
-						}
-						if (time > 30) {
-							game.checkCollisions()
-						}
-						if (time > 150) {
-							game.isOver = true
-						}
-						game.requestRedraw()
-					}
-					time++
-				}.bind(this), 9)
+				this.fallTimeout(startingY, time, maxHeight)
 			}
 		}
 	}

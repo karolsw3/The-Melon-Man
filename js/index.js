@@ -37,7 +37,7 @@ var game = {
 		"grassPlatform": [{tileColumn: 0, tileRow: 0, x: 0, y: 0}, {tileColumn: 1, tileRow: 0, x: 1, y: 0}, {tileColumn: 2, tileRow: 0, x: 2, y: 0}],
 		"grassPlatform--tiny":  [{tileColumn: 0, tileRow: 0, x: 0, y: 0}, {tileColumn: 2, tileRow: 0, x: 1, y: 0}],
 		"snowPlatform": [{tileColumn: 0, tileRow: 1, x: 0, y: 0}, {tileColumn: 1, tileRow: 1, x: 1, y: 0}, {tileColumn: 2, tileRow: 1, x: 2, y: 0}],
-		"gelPlatform": [{tileColumn: 3, tileRow: 1, x: 0, y: 0}, {tileColumn: 4, tileRow: 1, x: 1, y: 0}, {tileColumn: 5, tileRow: 1, x: 2, y: 0}]
+		"gelPlatform": [{tileColumn: 3, tileRow: 1, x: 0, y: 0}, {tileColumn: 4, tileRow: 1, x: 1, y: 0}]
 	},
 	generateMap: function () {
 
