@@ -11,8 +11,7 @@ var game = {
 		tileWidth: 24,
 		tileHeight: 24,
 		canvasWidth: 300,
-		canvasHeight: 300,
-		gravity: 10
+		canvasHeight: 300
 	},
 	pressedKeys: {},
 	init: function (onInit) {

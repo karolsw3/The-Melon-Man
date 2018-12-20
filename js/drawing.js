@@ -49,9 +49,23 @@ game.redraw = function () {
 
 	game.context.fillRect(0, 0, game.canvas.width, game.canvas.height)
 
-	// Draw the map
+	// List nearest structures
+	var structuresToDraw = []
+	var drawing_distance = 10
 	for (var i = 0; i < game.map.structures.length; i++) {
-		game.drawStructure(game.map.structures[i].name, game.map.structures[i].x, game.map.structures[i].y)
+		if (
+			game.map.structures[i].x > (game.player.x / game.options.tileWidth) - drawing_distance
+			&& game.map.structures[i].x < (game.player.x / game.options.tileWidth) + drawing_distance
+			&& game.map.structures[i].y > (game.player.y / game.options.tileHeight) - drawing_distance
+			&& game.map.structures[i].y < (game.player.y / game.options.tileHeight) + drawing_distance
+		) {
+			structuresToDraw.push(game.map.structures[i])
+		}
+	}
+
+	// Draw them
+	for (var i = 0; i < structuresToDraw.length; i++) {
+		game.drawStructure(structuresToDraw[i].name, structuresToDraw[i].x, structuresToDraw[i].y)
 	}
 
 	// Draw the player
