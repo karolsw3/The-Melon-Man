@@ -13,7 +13,7 @@ game.player = {
 					if (this.y < this.highestY) {
 						this.highestY = this.y
 					}
-					if (time > 32) {
+					if (time > 37) {
 						game.checkCollisions()
 					}
 					if (time < 150) {

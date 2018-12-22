@@ -36,7 +36,12 @@ var game = {
 		"grassPlatform": [{tileColumn: 0, tileRow: 0, x: 0, y: 0}, {tileColumn: 1, tileRow: 0, x: 1, y: 0}, {tileColumn: 2, tileRow: 0, x: 2, y: 0}],
 		"grassPlatform--tiny":  [{tileColumn: 0, tileRow: 0, x: 0, y: 0}, {tileColumn: 2, tileRow: 0, x: 1, y: 0}],
 		"snowPlatform": [{tileColumn: 0, tileRow: 1, x: 0, y: 0}, {tileColumn: 1, tileRow: 1, x: 1, y: 0}, {tileColumn: 2, tileRow: 1, x: 2, y: 0}],
-		"gelPlatform": [{tileColumn: 3, tileRow: 1, x: 0, y: 0}, {tileColumn: 4, tileRow: 1, x: 1, y: 0}]
+		"gelPlatform": [{tileColumn: 3, tileRow: 1, x: 0, y: 0}, {tileColumn: 4, tileRow: 1, x: 1, y: 0}],
+		"seaWeedPlatform": [{tileColumn: 0, tileRow: 2, x: 0, y: 0}, {tileColumn: 0, tileRow: 3, x: 0, y: 1}],
+		"eyePlatform_1": [{tileColumn: 1, tileRow: 2, x: 0, y: 0}, {tileColumn: 2, tileRow: 2, x: 1, y: 0}],
+		"eyePlatform_2": [{tileColumn: 1, tileRow: 3, x: 0, y: 0}, {tileColumn: 2, tileRow: 3, x: 1, y: 0}],
+		"eyePlatform_3": [{tileColumn: 1, tileRow: 2, x: 0, y: 0}, {tileColumn: 2, tileRow: 3, x: 1, y: 0}],
+		"eyePlatform_4": [{tileColumn: 1, tileRow: 3, x: 0, y: 0}, {tileColumn: 2, tileRow: 2, x: 1, y: 0}]
 	},
 	generateMap: function () {
 
@@ -67,6 +72,23 @@ var game = {
 			this.map.structures.push({
 				name: "gelPlatform",
 				x: Math.floor(Math.random() * 6),
+				y: -i * 3
+			})
+		}
+
+		for (var i = 60; i < 90; i++) {
+			this.map.structures.push({
+				name: "seaWeedPlatform",
+				x: Math.floor(Math.random() * 4),
+				y: -i * 3
+			})
+		}
+
+		for (var i = 90; i < 100; i++) {
+			name = "eyePlatform_" + Math.floor(Math.random() * 4 + 1)
+			this.map.structures.push({
+				name: name,
+				x: Math.floor(Math.random() * 8),
 				y: -i * 3
 			})
 		}
