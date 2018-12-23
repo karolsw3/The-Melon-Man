@@ -5,7 +5,10 @@
     <link rel="stylesheet" href="css/style.css">
   </head>
   <body>
-    <canvas id="canvas"></canvas>
+    <div class="game">
+      <canvas id="canvas"></canvas>
+      <p class="counter" id="counter">Points: 0</p>
+    </div>
     <script src="js/index.js"></script>
     <script src="js/player.js"></script>
     <script src="js/keyboard.js"></script>
@@ -15,6 +18,13 @@
       // Event listeners
       document.addEventListener("keydown", game.keydown.bind(game), false)
       document.addEventListener("keyup", game.keyup.bind(game), false)
+      document.body.onresize = function () {
+        game.options.canvasWidth = window.innerWidth / 3,
+        game.options.canvasHeight = window.innerHeight / 3
+        game.canvas.width = game.options.canvasWidth
+        game.canvas.height = game.options.canvasHeight
+        game.requestRedraw()
+      }
 
       game.init(function () {
       	game.generateMap()

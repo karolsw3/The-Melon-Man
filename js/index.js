@@ -2,6 +2,7 @@
 var game = {
 	canvas: document.getElementById('canvas'),
 	context: this.canvas.getContext('2d', {alpha: false}),
+	counter: document.getElementById('counter'),
 	textures: new Image(),
 	drawPending: false,
 	backgrounds: {
@@ -18,8 +19,8 @@ var game = {
 		texturesPath: "textures.png",
 		tileWidth: 24,
 		tileHeight: 24,
-		canvasWidth: 300,
-		canvasHeight: 300
+		canvasWidth: window.innerWidth / 3,
+		canvasHeight: window.innerHeight / 3
 	},
 	pressedKeys: {},
 	init: function (onInit) {

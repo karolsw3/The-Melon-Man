@@ -7,8 +7,8 @@ game.drawTile = function (tileColumn, tileRow, x, y) {
 		tileRow * game.options.tileHeight,
 		game.options.tileWidth,
 		game.options.tileHeight,
-		x * game.options.tileWidth - Math.round(game.player.x) + Math.round(game.canvas.width / 2 + game.options.tileWidth / 2),
-		y * game.options.tileHeight - Math.round(game.player.y) + Math.round(game.canvas.width / 2 + game.options.tileHeight / 2),
+		x * game.options.tileWidth - Math.round(game.player.x) + Math.round(game.options.canvasWidth / 2 + game.options.tileWidth / 2),
+		y * game.options.tileHeight - Math.round(game.player.y) + Math.round(game.options.canvasHeight / 2 + game.options.tileHeight / 2),
 		game.options.tileWidth,
 		game.options.tileHeight
 	)
@@ -29,8 +29,8 @@ game.drawPlayer = function () {
 		actualPlayerTile.tileRow * game.options.tileHeight,
 		game.options.tileWidth,
 		game.options.tileHeight,
-		Math.round(game.canvas.width / 2 - game.options.tileWidth / 2),
-		game.canvas.height / 2 - game.options.tileHeight / 2,
+		Math.round(game.options.canvasWidth / 2 - game.options.tileWidth / 2),
+		Math.round(game.options.canvasHeight / 2 - game.options.tileHeight / 2),
 		game.options.tileWidth,
 		game.options.tileHeight
 	)
@@ -44,13 +44,14 @@ game.redraw = function () {
 		var pattern = game.context.createPattern(game.backgrounds['sky'].image, 'repeat') // Create a pattern with this image, and set it to "repeat".
 		game.context.fillStyle = pattern
 	} else {
-		game.context.fillStyle = "#a5d9ff"
+		game.context.fillStyle = "#78c5ff"
 	}
 
 	game.context.fillRect(0, 0, game.canvas.width, game.canvas.height)
 
 	if (game.backgrounds['trees'].loaded) {
-		game.context.drawImage(game.backgrounds['trees'].image, 0, game.canvas.height / 2 - game.player.y / 10, 332, 160)
+		game.context.drawImage(game.backgrounds['trees'].image, 0, game.canvas.height / 2 - game.player.y / 10, 332, 180)
+		game.context.drawImage(game.backgrounds['trees'].image, 332, game.canvas.height / 2 - game.player.y / 10, 332, 180)
 	}
 
 	// List nearest structures
@@ -75,11 +76,7 @@ game.redraw = function () {
 	// Draw the player
 	game.drawPlayer()
 
-	// Draw "GUI"
-	game.context.font = "12px superscript"
-	game.context.textAlign = "center"
-	game.context.fillStyle = "black"
-	game.context.fillText("Points: " + Math.round(-game.player.highestY / (3 * game.options.tileHeight)), game.canvas.width - 50, game.canvas.height - 12)
+	game.counter.innerHTML = "Points: " + Math.round(-game.player.highestY / (3 * game.options.tileHeight)), game.canvas.width - 50, game.canvas.height - 12
 }
 
 game.requestRedraw = function () {
