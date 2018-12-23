@@ -4,8 +4,16 @@ var game = {
 	context: this.canvas.getContext('2d', {alpha: false}),
 	textures: new Image(),
 	drawPending: false,
-	backgroundLoaded: false,
-	background: new Image(),
+	backgrounds: {
+			'sky': {
+				image: new Image(),
+				loaded: false
+			},
+			'trees': {
+				image: new Image(),
+				loaded: false
+			}
+	},
 	options: {
 		texturesPath: "textures.png",
 		tileWidth: 24,
@@ -19,11 +27,14 @@ var game = {
 		this.canvas.height = this.options.canvasHeight
 		this.context.imageSmoothingEnabled = false
 
-    this.background.src = "background.png"
+    this.backgrounds['sky'].image.src = "background.png"
+		this.backgrounds['trees'].image.src = "trees.png"
 
-    this.background.onload = function () {
-			this.backgroundLoaded = true
-    }.bind(this)
+		for (var key in this.backgrounds) {
+			this.backgrounds[key].image.onload = function (currentKey) {
+				this.backgrounds[currentKey].loaded = true
+			}.bind(this, key)
+		}
 
 		this.textures.src = this.options.texturesPath
 		this.textures.onload = onInit

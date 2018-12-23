@@ -22,6 +22,9 @@ game.player = {
 					} else {
 						game.isOver = true
 					}
+					if (this.y > 40) {
+						game.isOver = true
+					}
 					game.requestRedraw()
 				}
 			}.bind(this, startingY, time, maxHeight), 15)

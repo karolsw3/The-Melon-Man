@@ -40,14 +40,18 @@ game.redraw = function () {
 	game.drawPending = false
 
 	// Draw the background
-	if (game.backgroundLoaded) {
-		var pattern = game.context.createPattern(game.background, 'repeat') // Create a pattern with this image, and set it to "repeat".
+	if (game.backgrounds['sky'].loaded) {
+		var pattern = game.context.createPattern(game.backgrounds['sky'].image, 'repeat') // Create a pattern with this image, and set it to "repeat".
 		game.context.fillStyle = pattern
 	} else {
 		game.context.fillStyle = "#a5d9ff"
 	}
 
 	game.context.fillRect(0, 0, game.canvas.width, game.canvas.height)
+
+	if (game.backgrounds['trees'].loaded) {
+		game.context.drawImage(game.backgrounds['trees'].image, 0, game.canvas.height / 2 - game.player.y / 10, 332, 160)
+	}
 
 	// List nearest structures
 	var structuresToDraw = []
