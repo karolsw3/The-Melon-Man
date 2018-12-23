@@ -15,6 +15,9 @@ var game = {
 				loaded: false
 			}
 	},
+	sounds: {
+		jump: new Audio('sounds/jump.wav')
+	},
 	options: {
 		texturesPath: "textures.png",
 		tileWidth: 24,

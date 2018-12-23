@@ -39,6 +39,7 @@ game.player = {
 		jump: function (type) {
 			if (!this.isInAir) {
 				clearInterval(this.fallInterval)
+				game.sounds.jump.play()
 				this.isInAir = true
 				var startingY = this.y
 				var time = 1

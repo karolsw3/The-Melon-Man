@@ -7,7 +7,7 @@
   <body>
     <div class="game">
       <canvas id="canvas"></canvas>
-      <p class="counter" id="counter">Points: 0</p>
+      <p class="counter" id="counter">A game by Karol Swierczek | Controls: W, D / arrows and SPACE | Points: 0</p>
     </div>
     <script src="js/index.js"></script>
     <script src="js/player.js"></script>
@@ -31,5 +31,9 @@
       	game.requestRedraw()
       })
     </script>
+    <audio controls loop autoplay hidden>
+      <source src="sounds/music.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
   </body>
 </html>
