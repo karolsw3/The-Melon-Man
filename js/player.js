@@ -5,6 +5,7 @@ game.player = {
 		highestY: 0,
 		direction: "left",
 		isInAir: false,
+		startedJump: false,
 		moveInterval: null,
 		fallTimeout: function(startingY, time, maxHeight) {
 			setTimeout( function () {
@@ -14,6 +15,7 @@ game.player = {
 						this.highestY = this.y
 					}
 					if (time > 37) {
+						this.startedJump = false
 						game.checkCollisions()
 					}
 					if (time < 150) {
@@ -41,6 +43,7 @@ game.player = {
 				clearInterval(this.fallInterval)
 				game.sounds.jump.play()
 				this.isInAir = true
+				this.startedJump = true
 				var startingY = this.y
 				var time = 1
 				maxHeight = 121

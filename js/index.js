@@ -116,7 +116,7 @@ var game = {
 			this.map.structures.push({
 				name: "manHoldingPlatform",
 				x: Math.floor(Math.random() * 10),
-				y: -i * 4
+				y: -i * 3
 			})
 		}
 	},

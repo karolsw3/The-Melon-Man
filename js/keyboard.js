@@ -18,11 +18,11 @@ game.keydown = function (event) {
 							game.player.x -= 0.1
 						}
 						game.requestRedraw()
+						if (!game.checkCollisions()) {
+							// Player should fall
+							game.player.jump("fall")
+						}
 					}, 4 * i)
-					if (i % 12 == 0 && !game.checkCollisions()) {
-						// Player should fall
-						game.player.jump("fall")
-					}
 				}
 				game.player.animationFrameNumber++
 			}, 120)
@@ -40,11 +40,10 @@ game.keydown = function (event) {
 							game.player.x += 0.1
 						}
 						game.requestRedraw()
+						if (!game.checkCollisions()) {
+							game.player.jump("fall")
+						}
 					}.bind(game), 4 * i)
-					if (i % 12 == 0 && !game.checkCollisions()) {
-						// Player should fall
-						game.player.jump("fall")
-					}
 				}
 				game.player.animationFrameNumber++
 			}, 120)
