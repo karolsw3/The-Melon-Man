@@ -56,7 +56,11 @@ var game = {
 		"eyePlatform_1": [{tileColumn: 1, tileRow: 2, x: 0, y: 0}, {tileColumn: 2, tileRow: 2, x: 1, y: 0}],
 		"eyePlatform_2": [{tileColumn: 1, tileRow: 3, x: 0, y: 0}, {tileColumn: 2, tileRow: 3, x: 1, y: 0}],
 		"eyePlatform_3": [{tileColumn: 1, tileRow: 2, x: 0, y: 0}, {tileColumn: 2, tileRow: 3, x: 1, y: 0}],
-		"eyePlatform_4": [{tileColumn: 1, tileRow: 3, x: 0, y: 0}, {tileColumn: 2, tileRow: 2, x: 1, y: 0}]
+		"eyePlatform_4": [{tileColumn: 1, tileRow: 3, x: 0, y: 0}, {tileColumn: 2, tileRow: 2, x: 1, y: 0}],
+		"manHoldingPlatform": [
+			{tileColumn: 3, tileRow: 2, x: 0, y: 0}, {tileColumn: 4, tileRow: 2, x: 1, y: 0},
+			{tileColumn: 3, tileRow: 3, x: 0, y: 1, collidable: false}, {tileColumn: 4, tileRow: 3, x: 1, y: 1, collidable: false}
+		]
 	},
 	generateMap: function () {
 
@@ -105,6 +109,14 @@ var game = {
 				name: name,
 				x: Math.floor(Math.random() * 8),
 				y: -i * 3
+			})
+		}
+
+		for (var i = 100; i < 130; i++) {
+			this.map.structures.push({
+				name: "manHoldingPlatform",
+				x: Math.floor(Math.random() * 10),
+				y: -i * 4
 			})
 		}
 	},
