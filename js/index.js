@@ -48,8 +48,11 @@ var game = {
 	},
 	// Describe structures using coordinates of textures and coordinates on map
 	structures: {
-		"grassPlatform": [{tileColumn: 0, tileRow: 0, x: 0, y: 0}, {tileColumn: 1, tileRow: 0, x: 1, y: 0}, {tileColumn: 2, tileRow: 0, x: 2, y: 0}],
-		"grassPlatform--tiny":  [{tileColumn: 0, tileRow: 0, x: 0, y: 0}, {tileColumn: 2, tileRow: 0, x: 1, y: 0}],
+		"grassPlatform": [
+			{tileColumn: 0, tileRow: 0, x: 0, y: 0}, {tileColumn: 5, tileRow: 1, x: 0, y: -1, collidable: false},
+			{tileColumn: 1, tileRow: 0, x: 1, y: 0}, {tileColumn: 5, tileRow: 1, x: 1, y: -1, collidable: false},
+			{tileColumn: 2, tileRow: 0, x: 2, y: 0}, {tileColumn: 5, tileRow: 1, x: 2, y: -1, collidable: false}
+		],
 		"snowPlatform": [{tileColumn: 0, tileRow: 1, x: 0, y: 0}, {tileColumn: 1, tileRow: 1, x: 1, y: 0}, {tileColumn: 2, tileRow: 1, x: 2, y: 0}],
 		"gelPlatform": [{tileColumn: 3, tileRow: 1, x: 0, y: 0}, {tileColumn: 4, tileRow: 1, x: 1, y: 0}],
 		"seaWeedPlatform": [{tileColumn: 0, tileRow: 2, x: 0, y: 0}, {tileColumn: 0, tileRow: 3, x: 0, y: 1}],
@@ -60,7 +63,8 @@ var game = {
 		"manHoldingPlatform": [
 			{tileColumn: 3, tileRow: 2, x: 0, y: 0}, {tileColumn: 4, tileRow: 2, x: 1, y: 0},
 			{tileColumn: 3, tileRow: 3, x: 0, y: 1, collidable: false}, {tileColumn: 4, tileRow: 3, x: 1, y: 1, collidable: false}
-		]
+		],
+		"snowman": [{tileColumn: 5, tileRow: 3, x: 0, y: 0, collidable: false}, {tileColumn: 5, tileRow: 2, x: 0, y: -1, collidable: false}]
 	},
 	generateMap: function () {
 
@@ -80,11 +84,19 @@ var game = {
 		}
 
 		for (var i = 20; i < 40; i++) {
+			randomX = Math.floor(Math.random() * 8)
 			this.map.structures.push({
 				name: "snowPlatform",
-				x: Math.floor(Math.random() * 8),
+				x: randomX,
 				y: -i * 3
 			})
+			if (Math.floor(Math.random() * 7) == 0) {
+				this.map.structures.push({
+					name: "snowman",
+					x: randomX + Math.floor(Math.random() * 3),
+					y: -i * 3 - 1
+				})
+			}
 		}
 
 		for (var i = 40; i < 60; i++) {
@@ -112,7 +124,7 @@ var game = {
 			})
 		}
 
-		for (var i = 100; i < 130; i++) {
+		for (var i = 100; i < 120; i++) {
 			this.map.structures.push({
 				name: "manHoldingPlatform",
 				x: Math.floor(Math.random() * 10),
