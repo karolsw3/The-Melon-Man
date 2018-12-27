@@ -15,6 +15,11 @@ game.structures = {
 		{tileColumn: 3, tileRow: 2, x: 0, y: 0}, {tileColumn: 4, tileRow: 2, x: 1, y: 0},
 		{tileColumn: 3, tileRow: 3, x: 0, y: 1, collidable: false}, {tileColumn: 4, tileRow: 3, x: 1, y: 1, collidable: false}
 	],
+	"lava_platform": [
+			{tileColumn: 6, tileRow: 1, x: -1, y: -0.9, collidable: false},{tileColumn: 7, tileRow: 1, x: 0, y: -0.9, collidable: false}, {tileColumn: 8, tileRow: 1, x: 1, y: -0.9, collidable: false},
+			{tileColumn: 0, tileRow: 4, x: -1, y: 0},{tileColumn: 1, tileRow: 4, x: 0, y: 0}, {tileColumn: 2, tileRow: 4, x: 1, y: 0},
+			{tileColumn: 0, tileRow: 5, x: -1, y: 1, collidable: false},{tileColumn: 1, tileRow: 5, x: 0, y: 1, collidable: false}, {tileColumn: 2, tileRow: 5, x: 1, y: 1, collidable: false}
+	],
 	"snowman": [{tileColumn: 5, tileRow: 3, x: 0, y: 0, collidable: false}, {tileColumn: 5, tileRow: 2, x: 0, y: -1, collidable: false}]
 }
 
@@ -52,21 +57,21 @@ game.generateMap = function () {
 
 	for (var i = 40; i < 60; i++) {
 		this.map.structures.push({
-			name: "gelPlatform",
+			name: "lava_platform",
 			x: Math.floor(Math.random() * 6),
 			y: -i * 3
 		})
 	}
 
-	for (var i = 60; i < 90; i++) {
+	for (var i = 60; i < 80; i++) {
 		this.map.structures.push({
-			name: "seaWeedPlatform",
+			name: "gelPlatform",
 			x: Math.floor(Math.random() * 4),
 			y: -i * 3
 		})
 	}
 
-	for (var i = 90; i < 100; i++) {
+	for (var i = 80; i < 100; i++) {
 		name = "eyePlatform_" + Math.floor(Math.random() * 4 + 1)
 		this.map.structures.push({
 			name: name,
@@ -78,6 +83,13 @@ game.generateMap = function () {
 	for (var i = 100; i < 120; i++) {
 		this.map.structures.push({
 			name: "manHoldingPlatform",
+			x: Math.floor(Math.random() * 10),
+			y: -i * 3
+		})
+	}
+	for (var i = 120; i < 1000; i++) {
+		this.map.structures.push({
+			name: "seaWeedPlatform",
 			x: Math.floor(Math.random() * 10),
 			y: -i * 3
 		})
