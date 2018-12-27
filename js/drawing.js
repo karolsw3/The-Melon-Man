@@ -56,7 +56,7 @@ game.redraw = function () {
 
 	// List nearest structures
 	var structuresToDraw = []
-	var drawing_distance = 10
+	var drawing_distance = 15
 	for (var i = 0; i < game.map.structures.length; i++) {
 		if (
 			game.map.structures[i].x > (game.player.x / game.options.tileWidth) - drawing_distance
