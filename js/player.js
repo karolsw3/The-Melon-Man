@@ -29,7 +29,7 @@ game.player = {
 					}
 					game.requestRedraw()
 				}
-			}.bind(this, startingY, time, maxHeight), 15)
+			}.bind(this, startingY, time, maxHeight), 12)
 		},
 		animationFrameNumber: 0,
 		collidesWithGround: true,
