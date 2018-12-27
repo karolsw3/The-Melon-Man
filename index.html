@@ -7,6 +7,11 @@
   <body>
     <div class="game">
       <canvas id="canvas"></canvas>
+      <div class="mobileControls">
+        <button class="mobileControls__button" onmousedown="game.moveLeft()" onmouseup="clearInterval(game.player.moveInterval)">Left</button>
+        <button class="mobileControls__button" onmousedown="game.moveRight()" onmouseup="clearInterval(game.player.moveInterval)">Right</button>
+        <button class="mobileControls__button" onmousedown="game.player.jump()">Jump</button>
+      </div>
       <p class="counter" id="counter">A game by Karol Swierczek | Controls: W, D / arrows and SPACE | Points: 0</p>
     </div>
     <script src="js/index.js"></script>
