@@ -78,7 +78,7 @@ game.generateMap = function () {
 	for (var i = 100; i < 120; i++) {
 		this.map.structures.push({
 			name: "manHoldingPlatform",
-			x: Math.floor(Math.random() * 10),
+			x: Math.floor(Math.random() * 8),
 			y: -i * 3
 		})
 	}
