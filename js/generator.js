@@ -83,6 +83,13 @@ game.generateMap = function () {
 	for (var i = 100; i < 120; i++) {
 		this.map.structures.push({
 			name: "manHoldingPlatform",
+			x: Math.floor(Math.random() * 8),//lava_platform
+			y: -i * 3
+		})
+	}
+	for (var i = 120; i < 140; i++) {
+		this.map.structures.push({
+			name: "lava_platform",
 			x: Math.floor(Math.random() * 8),
 			y: -i * 3
 		})
