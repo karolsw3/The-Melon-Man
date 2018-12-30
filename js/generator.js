@@ -87,6 +87,7 @@ game.generateMap = function () {
 			y: -i * 3
 		})
 	}
+
 	for (var i = 120; i < 140; i++) {
 		this.map.structures.push({
 			name: "lava_platform",
