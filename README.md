@@ -1,14 +1,14 @@
 # The-Melon-Man
 
-The objective is to jump through the randomly-generated platforms and get as high as possible.
+The objective is to jump through randomly-generated platforms and get as high as possible.
 Use space to jump, and A, D or arrows to move left / right.
 
 # For contributors
 
 ## How to add a new platform?
-1. Add a new texture: Modify the textures.png file, where each texture is 24 pixels high and wide. (You can add a new ones wherever you want)
-2. Specify the platforms structure and add it to the generator:
-    - Open the generator.js file and add a new structure to the array of structures:
+1. Add a new texture: modify textures.png file, where each texture is 24 pixels high and wide. (You can add new ones wherever you want)
+2. Specify the platform's structure and add it to the generator:
+    - Open the generator.js file and add a new structure to array of structures:
       ```javascript
       game.structures = [
         ...,
