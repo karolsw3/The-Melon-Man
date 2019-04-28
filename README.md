@@ -1,6 +1,8 @@
+<img src="https://i.ibb.co/F3T1QTH/Screenshot-2019-04-28-at-11-18-55.png" alt="Melon Man" height="400"/>
+
 # The-Melon-Man
 
-The objective is to jump through randomly-generated platforms and get as high as possible.
+The goal is to jump through randomly-generated platforms and get as high as possible.
 Use space to jump, and A, D or arrows to move left / right.
 
 # For contributors
